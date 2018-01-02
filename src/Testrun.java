@@ -1,22 +1,36 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class Testrun {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		String[] Input = sc.nextLine().split(" ");
+		List<String> a = Arrays.asList(Input);
 		
-
-
+		runInShellIO(a);
 	}
 	
-	void runInShell(String command) throws IOException  {
+
+	
+	static void runInShellIO(List<String> command) throws IOException {
+		Process p = new ProcessBuilder(command).start();
+		BufferedReader reader = new BufferedReader(new InputStreamReader (p.getInputStream()));
+		StringBuilder builder = new StringBuilder();
+		String line = null;
+		while ((line=reader.readLine()) != null) {
+			builder.append(line);
+			builder.append(System.getProperty("line.separator"));
+		}
 		
-	Runtime.getRuntime().exec(command);
-	
-	}
-	
-	String runInShellIO(String command) throws IOException {
-		Runtime.getRuntime().exec(command);
-		return 
+		String result = builder.toString();
+		System.out.println(result);
+		
 		
 	}
 
